@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
-Route::post('/menu_view/{id}', [HomeController::class, 'menu_view']);
+Route::get('/menu_view/{id}', [HomeController::class, 'menu_view']);

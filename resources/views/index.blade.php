@@ -68,6 +68,7 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="menu-content">
+                                    @csrf
 
                                     <div class="tab-pane fade show active" id="makanan" role="tabpanel"
                                         aria-labelledby="menu-makanan">
@@ -80,10 +81,13 @@
                                                 @foreach ($makanan as $items)
                                                     <div class="row">
                                                         <div class="col-8">
-                                                            <h5>{{ $items->name_product }}</h4>
+                                                            <button class="btn" data-toggle="modal"
+                                                                data-target="#viewModal" data-id="{{ $items->id_product }}">
+                                                                <h5>{{ $items->name_product }}</h5>
+                                                            </button>
                                                         </div>
                                                         <div class="col-4">
-                                                            <h5>{{ $items->price }}</h5>
+                                                            <h5>@currency($items->price)</h5>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -103,64 +107,19 @@
                                                 @foreach ($minuman as $items)
                                                     <div class="row">
                                                         <div class="col-8">
-                                                            {{-- <button class="btn" id="modal-{{ $loop->iteration }}">
-                                                                <h5>{{ $items['nama'] }}</h5>
-                                                            </button> --}}
-                                                            <button class="btn view_data" id="view_menu" data-id="">
-                                                                <h5>{{ $items['nama'] }}</h5>
+                                                            <button class="btn" data-toggle="modal"
+                                                                data-target="#viewModal"
+                                                                data-id="{{ $items->id_product }}">
+                                                                <h5>{{ $items->name_product }}</h5>
                                                             </button>
                                                         </div>
                                                         <div class="col-4">
-                                                            <h5>{{ $items['harga'] }}</h5>
+                                                            <h5>@currency($items->price)</h5>
                                                         </div>
                                                     </div>
                                                 @endforeach
                                             </div>
 
-                                        </div>
-                                    </div>
-
-                                    {{-- modal --}}
-                                    <div class="modal fade" id="view_menu">
-                                        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Modal title</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body" id="menu_detail">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
-                                        aria-labelledby="modal-title" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modal-title"></h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p id="modal-message"></p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -231,4 +190,11 @@
         </div>
 
     </section>
+
+    <div class="modal fade" id="viewModal">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 @endsection

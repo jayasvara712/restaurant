@@ -10,30 +10,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $data_makanan = [
-            ['nama' => 'Nasi Goreng',                           'harga' => 'Rp.15.000'],
-            ['nama' => 'Nasi Goreng Ayam Merah',                'harga' => 'Rp.18.000'],
-            ['nama' => 'Nasi Goreng Kunyit',                    'harga' => 'Rp.15.000'],
-            ['nama' => 'Nasi Goreng Kunyit Ayam Merah',         'harga' => 'Rp.18.000'],
-            ['nama' => 'Nasi Goreng Angkak',                    'harga' => 'Rp.15.000'],
-            ['nama' => 'Nasi Goreng Angkak Ayam Merah',         'harga' => 'Rp.18.000'],
-            ['nama' => 'Nasi Goreng Kecombrang Ayam Merah',     'harga' => 'Rp.18.000'],
-            ['nama' => 'Mie Goreng',                            'harga' => 'Rp.15.000'],
-            ['nama' => 'Mie Goreng Ayam Merah',                 'harga' => 'Rp.18.000'],
-            ['nama' => 'Kwitiau Goreng',                        'harga' => 'Rp.15.000'],
-            ['nama' => 'Kwitiau Goreng Ayam Merah',             'harga' => 'Rp.18.000'],
-            ['nama' => 'Bihun Goreng',                          'harga' => 'Rp.15.000'],
-            ['nama' => 'Bihun Goreng Ayam Merah',               'harga' => 'Rp.18.000'],
-            ['nama' => 'Ta Mie Goreng Ayam Merah',              'harga' => 'Rp.20.000'],
-            ['nama' => 'Mie Ayam',                              'harga' => 'Rp.15.000'],
-            ['nama' => 'Mie Ayam Pangsit',                      'harga' => 'Rp.20.000'],
-            ['nama' => 'Kwitiau Ayam Merah',                    'harga' => 'Rp.15.000'],
-            ['nama' => 'Kwitiau Ayam Merah + pangsit',          'harga' => 'Rp.20.000'],
-            ['nama' => 'Bihun Goreng Ayam Merah',               'harga' => 'Rp.15.000'],
-            ['nama' => 'Bihun Goreng Ayam Merah Pangsit',       'harga' => 'Rp.20.000'],
-            ['nama' => 'Nasi Ayam Merah',                       'harga' => 'Rp.15.000' ],
-        ];
-        $makanan = Product::with('category')->where('id_category', 2)->get();
+        $makanan = Product::with('category')->where('id_category', 1)->get();
+        $minuman = Product::with('category')->where('id_category', 2)->get();
 
         $data_minuman = [
             ['nama' => 'Es Teh',                'harga' => 'Rp.5.000'],
@@ -60,8 +38,6 @@ class HomeController extends Controller
             ['nama' => 'Es Campur Meeta',       'harga' => 'Rp.10.000' ],
         ];
 
-        $minuman = collect($data_minuman);
-
         // dd($data_makanan);
         return view('index', [
             'makanan' => $makanan,
@@ -69,8 +45,14 @@ class HomeController extends Controller
         ]);
     }
 
-    public function menu_view()
+    public function menu_view(Request $request, $id_product)
     {
-        return response()->json($data);
+        $data = Product::findOrFail($id_product);
+
+        // return response()->json(['data' => $data]);
+        return view('modal', compact('data'));
+        // return view('modal', [
+        //     'data' => $data
+        // ]);
     }
 }
